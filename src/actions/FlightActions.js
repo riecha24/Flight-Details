@@ -24,19 +24,20 @@ export const fetchFlights = () => {
 };
 
 export const fetchFlightDetails = (flightId) => {
-  return dispatch => {
-    axios.get(`https://flight-status-mock.core.travelopia.cloud/flights/${flightId}`)
-      .then(response => {
-        dispatch({
-          type: FETCH_FLIGHT_DETAILS_SUCCESS,
-          payload: response.data
-        });
-      })
-      .catch(error => {
-        dispatch({
-          type: FETCH_FLIGHT_DETAILS_FAILURE,
-          payload: error.message
-        });
+  return async (dispatch) => {
+    try {
+      const response = await axios.get(`https://flight-status-mock.core.travelopia.cloud/flights/${flightId}`);
+      dispatch({
+        type: FETCH_FLIGHT_DETAILS_SUCCESS,
+        payload: response.data
       });
+      return response.data; // Return the response data
+    } catch (error) {
+      dispatch({
+        type: FETCH_FLIGHT_DETAILS_FAILURE,
+        payload: error.message
+      });
+      throw error; // Throw the error to be caught by the caller
+    }
   };
 };

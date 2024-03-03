@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate hook
 import { fetchFlights, fetchFlightDetails } from '../actions/FlightActions';
 import './FlightTable.css'; // Import CSS file for styling
 
 const FlightTable = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate(); // Initialize useNavigate hook
   const flights = useSelector(state => state.flights);
   const error = useSelector(state => state.error);
   const [selectedFlight, setSelectedFlight] = useState(null);
@@ -19,7 +21,14 @@ const FlightTable = () => {
 
   const handleRowClick = (flightId) => {
     // Dispatch action to fetch flight details for the clicked flight
-    dispatch(fetchFlightDetails(flightId));
+    dispatch(fetchFlightDetails(flightId))
+      .then(() => {
+        // Redirect to FlightDetailView after fetching flight details
+        navigate(`/flight/${flightId}`);
+      })
+      .catch(error => {
+        console.error('Error fetching flight details:', error);
+      });
     setSelectedFlight(flightId);
   };
 
