@@ -3,6 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate hook
 import { fetchFlights, fetchFlightDetails } from '../actions/FlightActions';
 import './FlightTable.css'; // Import CSS file for styling
+import { formatDepartureTime } from '../utils/date'
+
 
 const FlightTable = () => {
   const dispatch = useDispatch();
@@ -18,6 +20,8 @@ const FlightTable = () => {
     }, 10000);
     return () => clearInterval(interval);
   }, [dispatch]);
+
+  
 
   const handleRowClick = (flightId) => {
     // Dispatch action to fetch flight details for the clicked flight
@@ -42,7 +46,7 @@ const FlightTable = () => {
             <th>Airline</th>
             <th>Origin</th>
             <th>Destination</th>
-            <th>Departure Time</th>
+            <th>Departure Date & Time (UTC)</th> {/* Updated column header */}
             <th>Status</th>
           </tr>
         </thead>
@@ -53,7 +57,7 @@ const FlightTable = () => {
               <td>{flight.airline}</td>
               <td>{flight.origin}</td>
               <td>{flight.destination}</td>
-              <td>{flight.departureTime}</td>
+              <td>{formatDepartureTime(flight.departureTime)}</td> {/* Use formatDateTime function */}
               <td>{flight.status}</td>
             </tr>
           ))}

@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './FlightDetailView.css'; // Import the CSS file
+import { formatDepartureTime } from '../utils/date'
 
 const FlightDetailView = () => {
   const { flightId } = useParams();
@@ -39,6 +40,7 @@ const FlightDetailView = () => {
     navigate(-1);
   };
 
+
   return (
     <div className="detail-container">
       <h2>Flight Details</h2>
@@ -53,7 +55,7 @@ const FlightDetailView = () => {
           <p><strong>Airline:</strong> {flightDetails.airline}</p>
           <p><strong>Origin:</strong> {flightDetails.origin}</p>
           <p><strong>Destination:</strong> {flightDetails.destination}</p>
-          <p><strong>Departure Time:</strong> {flightDetails.departureTime}</p>
+          <p><strong>Departure Time:</strong> {formatDepartureTime(flightDetails.departureTime)}</p>
           <p><strong>Status:</strong> {flightDetails.status}</p>
           <button className="back-button" onClick={handleBackClick}>Back</button>
         </div>
