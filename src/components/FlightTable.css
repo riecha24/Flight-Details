@@ -1,33 +1,51 @@
+/* FlightTable.css */
+
 .flight-table-container {
-    padding: 20px;
-  }
-  
-  .error-message {
-    color: red;
-    font-size: 18px;
-    margin-bottom: 20px;
-  }
-  
-  .flight-table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  
-  .flight-table th, .flight-table td {
-    padding: 8px;
-    border: 1px solid #ddd;
-  }
-  
-  .flight-table th {
-    background-color: #f2f2f2;
-  }
-  
-  .flight-table tbody tr:nth-child(even) {
-    background-color: #f2f2f2;
-  }
-  
-  .flight-table tbody tr:hover {
-    background-color: #ddd;
-    cursor: pointer;
-  }
-  
+  padding: 20px;
+}
+
+.error-message {
+  color: red;
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.flight-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.flight-table th, .flight-table td {
+  padding: 8px;
+  border: 1px solid #ddd;
+}
+
+.flight-table th {
+  background-color: #4CAF50; /* Green */
+  color: white;
+}
+
+.flight-table tbody tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.flight-table tbody tr:hover {
+  background-color: #ddd;
+  cursor: pointer;
+}
+
+.boarding-color {
+  background-color: #FFC107; /* Yellow */
+}
+
+.delayed-color {
+  background-color: #F44336; /* Red */
+}
+
+.departed-color {
+  background-color: #9E9E9E; /* Grey */
+}
+
+.ontime-color {
+  background-color: #4CAF50; /* Green */
+}

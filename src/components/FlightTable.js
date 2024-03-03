@@ -1,17 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate hook
+import { useNavigate } from 'react-router-dom';
 import { fetchFlights, fetchFlightDetails } from '../actions/FlightActions';
-import './FlightTable.css'; // Import CSS file for styling
-import { formatDepartureTime } from '../utils/date'
-
+import './FlightTable.css';
+import { formatDepartureTime } from '../utils/date';
 
 const FlightTable = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate(); // Initialize useNavigate hook
+  const navigate = useNavigate();
   const flights = useSelector(state => state.flights);
   const error = useSelector(state => state.error);
-  const [selectedFlight, setSelectedFlight] = useState(null);
 
   useEffect(() => {
     dispatch(fetchFlights());
@@ -21,7 +19,20 @@ const FlightTable = () => {
     return () => clearInterval(interval);
   }, [dispatch]);
 
-  
+  const getStatusColor = useCallback((status) => {
+    switch (status) {
+      case 'Boarding':
+        return 'boarding-color';
+      case 'Delayed':
+        return 'delayed-color';
+      case 'Departed':
+        return 'departed-color';
+      case 'On Time':
+        return 'ontime-color';
+      default:
+        return '';
+    }
+  }, []);
 
   const handleRowClick = (flightId) => {
     // Dispatch action to fetch flight details for the clicked flight
@@ -33,7 +44,6 @@ const FlightTable = () => {
       .catch(error => {
         console.error('Error fetching flight details:', error);
       });
-    setSelectedFlight(flightId);
   };
 
   return (
@@ -46,19 +56,19 @@ const FlightTable = () => {
             <th>Airline</th>
             <th>Origin</th>
             <th>Destination</th>
-            <th>Departure Date & Time (UTC)</th> {/* Updated column header */}
+            <th>Departure Date & Time (UTC)</th>
             <th>Status</th>
           </tr>
         </thead>
         <tbody>
           {Array.isArray(flights.flights) && flights.flights.map(flight => (
-            <tr key={flight.id} onClick={() => handleRowClick(flight.id)} className={selectedFlight === flight.id ? 'selected' : ''}>
+            <tr key={flight.id} onClick={() => handleRowClick(flight.id)} className={flights.selectedFlight === flight.id ? 'selected' : ''}>
               <td>{flight.flightNumber}</td>
               <td>{flight.airline}</td>
               <td>{flight.origin}</td>
               <td>{flight.destination}</td>
-              <td>{formatDepartureTime(flight.departureTime)}</td> {/* Use formatDateTime function */}
-              <td>{flight.status}</td>
+              <td>{formatDepartureTime(flight.departureTime)}</td>
+              <td className={getStatusColor(flight.status)}>{flight.status}</td>
             </tr>
           ))}
         </tbody>
