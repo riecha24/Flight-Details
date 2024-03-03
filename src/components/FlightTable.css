@@ -1,13 +1,18 @@
 /* FlightTable.css */
 
+:root {
+  --padding-size: 1.25rem; /* Define padding size as a variable */
+  --font-size: 1rem; /* Define font size as a variable */
+}
+
 .flight-table-container {
-  padding: 20px;
+  padding: var(--padding-size); /* Use variable for padding */
 }
 
 .error-message {
   color: red;
-  font-size: 18px;
-  margin-bottom: 20px;
+  font-size: 1.125rem; /* Convert 18px to rem */
+  margin-bottom: var(--padding-size); /* Use padding size variable for margin */
 }
 
 .flight-table {
@@ -16,7 +21,7 @@
 }
 
 .flight-table th, .flight-table td {
-  padding: 8px;
+  padding: 0.5rem; /* Use rem for padding */
   border: 1px solid #ddd;
 }
 
@@ -34,6 +39,7 @@
   cursor: pointer;
 }
 
+/* Status Colors */
 .boarding-color {
   background-color: #FFC107; /* Yellow */
 }
@@ -48,4 +54,12 @@
 
 .ontime-color {
   background-color: #4CAF50; /* Green */
+}
+
+/* Responsive CSS */
+@media screen and (max-width: 600px) {
+  .flight-table th, .flight-table td {
+    padding: 0.25rem; /* Reduce padding for small screens */
+    font-size: 0.875rem; /* Reduce font size for small screens */
+  }
 }
